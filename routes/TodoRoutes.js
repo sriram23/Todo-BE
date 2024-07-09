@@ -1,13 +1,30 @@
 const express = require('express');
 const router = express.Router();
-const TodoModel = require('../models/Todo')
+const TodoModel = require('../models/Todo');
+const jwt = require('jsonwebtoken');
 
 router.post('/add', (req, res) => {
-    const task = req.body.task
-    TodoModel.create({
-        task: task
-    }).then(result => res.json(result))
-    .catch(err => {res.json(err)})
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1];
+    if(!token) {
+        return res.status(401).json({error: 'Unauthorized: missing token'});
+    }
+    try{
+        const decodedToken = jwt.verify(token, process.env.SECRET_KEY)
+        if(decodedToken) {
+            const task = req.body.task
+            TodoModel.create({
+                task: task
+            }).then(result => res.json(result))
+            .catch(err => {res.json(err)})
+        } else {
+            return res.status(401).json({error: 'Unauthorized: Unknown token'})
+        }
+        
+    } catch(err) {
+        return next(err)
+    }
+    
 })
 
 router.get('/get', (req, res) => {
