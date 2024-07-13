@@ -28,25 +28,70 @@ router.post('/add', (req, res) => {
 })
 
 router.get('/get', (req, res) => {
-    TodoModel.find().then(result => res.json(result)).catch(err => {res.json(err)})
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1];
+    if(!token) {
+        return res.status(401).json({error: 'Unauthorized: missing token'});
+    }
+    try{
+        const decodedToken = jwt.verify(token, process.env.SECRET_KEY)
+        if(decodedToken) {
+            TodoModel.find().then(result => res.json(result)).catch(err => {res.json(err)})
+        } else {
+            return res.status(401).json({error: 'Unauthorized: Unknown token'})
+        }
+        
+    } catch(err) {
+        return next(err)
+    }
 })
 
 router.put('/complete/:id', (req, res) => {
-    const { id } = req.params;
-    const completed = req.body.completed;
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1];
+    if(!token) {
+        return res.status(401).json({error: 'Unauthorized: missing token'});
+    }
+    try{
+        const decodedToken = jwt.verify(token, process.env.SECRET_KEY)
+        if(decodedToken) {
+            const { id } = req.params;
+            const completed = req.body.completed;
 
-    TodoModel.findByIdAndUpdate(id, { completed }, { new: true })
-        .then(result => res.json(result))
-        .catch(err => res.json(err));
+            TodoModel.findByIdAndUpdate(id, { completed }, { new: true })
+                .then(result => res.json(result))
+                .catch(err => res.json(err));
+        } else {
+            return res.status(401).json({error: 'Unauthorized: Unknown token'})
+        }
+        
+    } catch(err) {
+        return next(err)
+    }
 });
 
 router.put('/delete/:id', (req, res) => {
-    const { id } = req.params;
-    const deleted = req.body.deleted;
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1];
+    if(!token) {
+        return res.status(401).json({error: 'Unauthorized: missing token'});
+    }
+    try{
+        const decodedToken = jwt.verify(token, process.env.SECRET_KEY)
+        if(decodedToken) {
+            const { id } = req.params;
+            const deleted = req.body.deleted;
 
-    TodoModel.findByIdAndUpdate(id, { deleted }, { new: true })
-        .then(result => res.json(result))
-        .catch(err => res.json(err));
+            TodoModel.findByIdAndUpdate(id, { deleted }, { new: true })
+                .then(result => res.json(result))
+                .catch(err => res.json(err));
+        } else {
+            return res.status(401).json({error: 'Unauthorized: Unknown token'})
+        }
+        
+    } catch(err) {
+        return next(err)
+    }
 });
 
 module.exports = router
