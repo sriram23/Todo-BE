@@ -23,7 +23,8 @@ router.post('/add', (req, res) => {
         }
         
     } catch(err) {
-        return next(err)
+        const status = err.status || 500
+        return res.status(status).json({error:"Unauthorized: " + err.message})
     }
     
 })
@@ -36,6 +37,7 @@ router.get('/get', (req, res) => {
     }
     try{
         const decodedToken = jwt.verify(token, process.env.SECRET_KEY)
+        console.log("Decoded token: ",decodedToken)
         if(decodedToken) {
             TodoModel.find({email: decodedToken.email}).then(result => res.json(result)).catch(err => {res.json(err)})
         } else {
@@ -43,7 +45,8 @@ router.get('/get', (req, res) => {
         }
         
     } catch(err) {
-        return next(err)
+        const status = err.status || 500
+        return res.status(status).json({error:"Unauthorized: " + err.message})
     }
 })
 
@@ -67,7 +70,8 @@ router.put('/complete/:id', (req, res) => {
         }
         
     } catch(err) {
-        return next(err)
+        const status = err.status || 500
+        return res.status(status).json({error:"Unauthorized: " + err.message})
     }
 });
 
@@ -91,7 +95,8 @@ router.put('/delete/:id', (req, res) => {
         }
         
     } catch(err) {
-        return next(err)
+        const status = err.status || 500
+        return res.status(status).json({error:"Unauthorized: " + err.message})
     }
 });
 
