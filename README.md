@@ -4,14 +4,14 @@ Server code for a TODO application using the MERN stack.
 
 ## Table of Contents
 
-- Overview
-- Tech Stack
-- Features
-- Installation
-- Usage
-- Contributing
-- License
-- Contact
+- [Overview](#overview)
+- [Tech Stack](#tech-stack)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
 
 ## Overview
 
