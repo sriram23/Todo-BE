@@ -14,7 +14,8 @@ router.post('/add', (req, res) => {
         if(decodedToken) {
             const task = req.body.task
             TodoModel.create({
-                task: task
+                task: task,
+                email: decodedToken.email
             }).then(result => res.json(result))
             .catch(err => {res.json(err)})
         } else {
@@ -36,7 +37,7 @@ router.get('/get', (req, res) => {
     try{
         const decodedToken = jwt.verify(token, process.env.SECRET_KEY)
         if(decodedToken) {
-            TodoModel.find().then(result => res.json(result)).catch(err => {res.json(err)})
+            TodoModel.find({email: decodedToken.email}).then(result => res.json(result)).catch(err => {res.json(err)})
         } else {
             return res.status(401).json({error: 'Unauthorized: Unknown token'})
         }

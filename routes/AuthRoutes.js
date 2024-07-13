@@ -27,7 +27,7 @@ router.post('/login', async (req, res, next) => {
             console.error(e)
             return next(e)
         }
-        return res.status(200).json({token: token})
+        return res.status(200).json({token: token, email: existingUser.email})
     } catch (err) {
         return next(err)
     }
