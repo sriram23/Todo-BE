@@ -3,6 +3,7 @@ const router = express.Router();
 const TodoModel = require('../models/Todo');
 const jwt = require('jsonwebtoken');
 
+// Adds new tasks to the specified user
 router.post('/add', (req, res) => {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1];
@@ -29,6 +30,7 @@ router.post('/add', (req, res) => {
     
 })
 
+// Gets the list of tasks for the current user
 router.get('/get', (req, res) => {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1];
@@ -50,6 +52,7 @@ router.get('/get', (req, res) => {
     }
 })
 
+// Marks the specified task as completed
 router.put('/complete/:id', (req, res) => {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1];
@@ -75,6 +78,7 @@ router.put('/complete/:id', (req, res) => {
     }
 });
 
+// Marks the specified task as deleted
 router.put('/delete/:id', (req, res) => {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1];
