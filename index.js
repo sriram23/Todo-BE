@@ -9,7 +9,7 @@ const AuthRouter = require('./routes/AuthRoutes')
 const app = express()
   
 app.use(cors({
-  origin: [process.env.UI_URL]
+  origin: [process.env.UI_URL, 'http://localhost:1234']
 }));
 app.use(express.json())
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
