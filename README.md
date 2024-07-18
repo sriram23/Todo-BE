@@ -33,7 +33,7 @@ Server code for a TODO application using the MERN stack.
 
 To run **TODO BE** locally, follow these steps:
 
-1. Clone the repository: git clone https://github.com/yourusername/TODO-BE.git
+1. Clone the repository: git clone https://github.com/sriram23/TODO-BE.git
 
 2. Navigate to the project directory: cd TODO-BE
 
