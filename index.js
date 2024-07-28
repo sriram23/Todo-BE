@@ -94,7 +94,7 @@ mongoose
 
     // Schedule the cron job to run every Sunday at 9 AM IST
     cron.schedule(
-      "0 9 * * 0",
+      "0 * * * *",
       () => {
         console.log("Sending reports to email...");
         sendEmail();
